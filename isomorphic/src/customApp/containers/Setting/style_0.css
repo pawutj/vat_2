@@ -1,0 +1,60 @@
+.container_0 {
+    display: grid;
+    grid-template:
+      "taxpayer branch"  1fr
+      "retailer emp_1" 1fr
+      / 1fr 1fr;
+    grid-gap: 10px;
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .taxpayer{
+      grid-area: taxpayer
+  }
+
+  .branch{
+      grid-area:branch
+  }
+
+  .retailer{
+      grid-area:retailer
+  }
+
+  .emp_1{
+      grid-area:emp_1
+  }
+
+.container_4{
+    display:grid;
+    grid-template:
+    "address street"  1fr
+    "district province" 1fr
+    "tele emp_2" 1fr
+    / 1fr 1fr;
+}
+
+.address{
+    grid-area:address;
+}
+
+.street{
+    grid-area:street
+}
+
+.district{
+    grid-area:district
+}
+
+.province{
+    grid-area:province
+}
+
+.tele{
+    grid-area:tele
+}
+
+.emp_2{
+    grid-area:emp_2
+}

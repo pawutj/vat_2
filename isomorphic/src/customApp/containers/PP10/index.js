@@ -8,13 +8,14 @@ import Button, { ButtonGroup } from '../../../components/uielements/button';
 import Table from '../../../components/uielements/table';
 import * as TableViews from './tableViews/';
 import { tableinfos } from './configs';
-import "./style.css"
+import "./style_1.css"
 import { AutoComplete } from 'antd';
+import "../style_all.css"
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 5 }
+    sm: { span: 7}
   },
   wrapperCol: {
     xs: { span: 24 },
@@ -22,8 +23,10 @@ const formItemLayout = {
   }
 };
 const range = e => Array(e).fill(0).map((x,i) =>i)
-const pro_cat = ['Shirts','Trousers','Sneakers','Slingbacks','Leather Bag','+']
-
+const pro_cat = ['Shirts','Trousers','Sneakers','Slingbacks','Leather Bag']
+const formConfig = {
+  borderColor:"#654018"
+}
 const Pp10  = () => {
     const [form,setValues] = useState({
      name:'',
@@ -142,89 +145,95 @@ const Pp10  = () => {
     return (
         <LayoutContentWrapper>
         <LayoutContent>
-       <h2>For Tourist</h2><hr></hr>
+          <div style  = {{display:'flex',justifyContent:"center",width:'100%'}}>
+      <div style = {{textAlign:'center',backgroundColor:"#654018" , width:"200px",marginBottom:"10px"}}>
+      <h2 style = {{color:"white"}}>PP10 Application</h2>
+      </div>
+      </div>
+       <h2><font>For Tourist</font></h2><font><hr></hr></font>
        <div className = "container_1">
         <div className = "name">
         <FormItem
               {...formItemLayout}
-              label={<IntlMessages id="Name" />}
+              label={<b><font>Name</font></b>}
             >
-              <Input placeholder="Pawut Jingjit" name = "name" value={form.name} onChange = {updateField}  />
+              <Input placeholder="Pawut Jingjit" name = "name" value={form.name} onChange = {updateField} style = {formConfig} />
             </FormItem>
         </div>
         <div className = "emp_1"></div>
         <div className = "passport">
             <FormItem
               {...formItemLayout}
-              label={<IntlMessages id="Passport" />}
+              label={<b><font>Passport</font></b>}
             >
-              <Input placeholder="ABCDEF123" name = "passport" value={form.passport} onChange = {updateField}  />
+              <Input placeholder="ABCDEF123" name = "passport" value={form.passport} onChange = {updateField} style = {formConfig}  />
             </FormItem>
             
             </div>
             <div className = "nationality">
-            <FormItem
-              {...formItemLayout}
-              label={<IntlMessages id="Nationality" />}
+            <FormItem 
+              {...formItemLayout} 
+              label={<b><font>Natoinality</font></b>}
             >
-              <Input placeholder="Th" name = "nation" value={form.nation} onChange = {updateField}  />
+              <Input placeholder="Th" name = "nation" value={form.nation} onChange = {updateField}  style = {formConfig} />
             </FormItem>
             </div>
             </div>
-            <h2>For Product Item</h2><hr></hr>
+            <h2><font>For Product Item</font></h2><hr></hr>
             
             <div className ="container_2">
             <div className = "vat">
             <FormItem
               {...formItemLayout}
-              label={<IntlMessages id="VAT" />}
+              label={<b><font>Vat</font></b>}
             >
-              <Input placeholder="3131" name = "vat" value={form.vat} onChange = {updateField}  />
+              <Input placeholder="3131" name = "vat" value={form.vat} onChange = {updateField}  style = {formConfig} />
             </FormItem>
             </div>
             <div className = "emp_2"></div>
             <div className = "pbox" style ={{display:"flex"}} >
             {pro_cat.map( x =>(
               
-                <Button onClick ={() => updateCat(x) } style = {{marginLeft:'auto',marginRight:'auto',width:"150px"}} >{x}</Button>
-                
+                <Button onClick ={() => updateCat(x) } style = {{marginLeft:'auto',marginRight:'auto',width:"210px",border:"3px solid",...formConfig}} >{<font>{x}</font>}</Button>
             )
-
+          
             )}
+              <Button shape="circle" style={{marginLeft:'5px',...formConfig,border:"3px solid #654018"}}>+</Button> 
           </div>
 
           <div className = "product">
             <FormItem
               {...formItemLayout}
-              label={<IntlMessages id="Product" />}
+              label={<b><font>Product</font></b>}
             >
-              <Input placeholder="Kit-Kat" name = "product" value={form.product} onChange = {updateField}  />
+              <Input placeholder="Shirts" name = "product" value={form.product} onChange = {updateField} style = {formConfig} />
             </FormItem>
             </div>
             <div className = "quantity" >
             
             <FormItem
               {...formItemLayout}
-              label={<IntlMessages id="Quantity" />}
+              label={<b><font>Quantity</font></b>}
             >
-              <Input placeholder="1" name = "quantity" value={form.quantity} onChange = {updateField}  />
+              <Input placeholder="1" name = "quantity" value={form.quantity} onChange = {updateField} style = {formConfig}  />
             </FormItem>
             </div>
             <div className = "value">
                 
             <FormItem
               {...formItemLayout}
-              label={<IntlMessages id="Value" />}
+              label={<b><font>Value</font></b>}
             >
-              <Input placeholder="3$" name = "value" value={form.value} onChange = {updateField}  />
+              <Input placeholder="3$" name = "value" value={form.value} onChange = {updateField}  style = {formConfig} />
             </FormItem>
             </div>
             <div className = "enter" >
-            <Button onClick = {addProduct} style = {{width:"200px"}}>Enter</Button>
+            <Button onClick = {addProduct} style = {{width:"200px",backgroundColor:"#ff7f26",height:"40px"}}>Enter</Button>
             </div>
             </div>
-            <Table dataSource={productList.data} columns={productColumns} />
-           
+            <div style = {{marginTop:"20px" }}>
+            <Table dataSource={productList.data} columns={productColumns} style = {{color:"#654018"}} />
+            </div>
 
     </LayoutContent>
     </LayoutContentWrapper>
