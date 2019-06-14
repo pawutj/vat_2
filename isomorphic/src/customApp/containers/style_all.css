@@ -1,3 +1,27 @@
 font{
     color:#654018;
+    font-family: 'Kanit', sans-serif;
 }
+
+h2{
+    font-family: 'Kanit', sans-serif;
+    font-size:18px
+    
+}
+
+h4{
+    font-family: 'Kanit', sans-serif;
+}
+
+.font_kanit{
+    font-family: 'Kanit', sans-serif;
+}
+p{ 
+    font-family: 'Kanit', sans-serif;
+}
+    
+@media only screen and (max-width: 1366px) {
+    .zoomC{
+        zoom:85%
+    }
+  }

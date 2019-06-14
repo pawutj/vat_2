@@ -11,6 +11,10 @@ import { tableinfos } from './configs';
 import "./style_1.css"
 import { AutoComplete } from 'antd';
 import "../style_all.css"
+import Select, { SelectOption } from '../../../components/uielements/select';
+import InputNumber from '../../../components/uielements/InputNumber'; 
+const Option = SelectOption;
+
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
@@ -23,7 +27,8 @@ const formItemLayout = {
   }
 };
 const range = e => Array(e).fill(0).map((x,i) =>i)
-const pro_cat = ['Shirts','Trousers','Sneakers','Slingbacks','Leather Bag']
+const pro_cat_2 = ['Shirts','Trousers','Sneakers','Slingbacks','Leather Bag']
+const pro_cat_1 = ['เสื้อ','กางเกง','รองเท้าหนัง','รองเท้าผ้าใบ','กระเป๋าผ้า']
 const formConfig = {
   borderColor:"#654018"
 }
@@ -47,48 +52,56 @@ const Pp10  = () => {
     
     })
 
+    const [lang,_setLang] = useState(true)
+  
+  const setLang = () =>{
+    _setLang(lang => !lang)
+    console.log(lang)
+  }
+
+  
     useEffect(() => {
      
     })
 
     const productColumns = [
         {
-        title:'No',
+        title:lang?"อันดับ":"No",
         dataIndex:'no',
         key:'no'
             
     },
     {
-        title:'Tax',
+        title:lang?"เลขที่ใบกำกับภาษี":"Tax",
         dataIndex:'tax',
         key:'tax'
             
     },
     {
-        title:'Product',
+        title:lang?"รายการสินค้า":'Product',
         dataIndex:'product',
         key:'product'
             
     },
     {
-        title:'Quantity',
+        title:lang?"จำนวน":'Quantity',
         dataIndex:'quantity',
         key:'quantity'
             
     },
     {
-        title:'Value',
+        title:lang?"ราคา":'Value',
         dataIndex:'value',
         key:'value'
             
     },
     {
-      title: '',
+      title: lang?"ลบ":'Delete',
       dataIndex: '',
       key: 'd',
       render: (text, record) => (
         <a onClick={e =>onDelete(record.no,e)} href="#">
-          Delete
+          <Button shape = "circle" size = "small" style = {formConfig}></Button>
         </a>
       ),
     }
@@ -125,6 +138,13 @@ const Pp10  = () => {
      
     }
 
+    const updateDrop = (v,e) =>{
+      setValues({
+        ...form,
+        nation:v
+      })
+    }
+
     const addProduct = () => {
         let t = [...productList.data,{no:form.c,tax:form.vat,product:form.product,quantity:form.quantity,value:form.value}]
         let ct = form.c
@@ -145,96 +165,116 @@ const Pp10  = () => {
     return (
         <LayoutContentWrapper>
         <LayoutContent>
+          <div className = "zoomC">
           <div style  = {{display:'flex',justifyContent:"center",width:'100%'}}>
       <div style = {{textAlign:'center',backgroundColor:"#654018" , width:"200px",marginBottom:"10px"}}>
       <h2 style = {{color:"white"}}>PP10 Application</h2>
       </div>
       </div>
-       <h2><font>For Tourist</font></h2><font><hr></hr></font>
+       <h2><font><b>{lang?"สำหรับนักท่องเที่ยว":"For Tourist"}</b></font></h2><font><hr></hr></font>
        <div className = "container_1">
         <div className = "name">
         <FormItem
               {...formItemLayout}
-              label={<b><font>Name</font></b>}
+              label={<b><font>{lang?"ชื่อนักท่องเที่ยว":"Name"}</font></b>}
             >
-              <Input placeholder="Pawut Jingjit" name = "name" value={form.name} onChange = {updateField} style = {formConfig} />
+              <Input placeholder="Pawut Jingjit" name = "name" value={form.name} onChange = {updateField} style = {formConfig} className="font_kanit"  />
             </FormItem>
         </div>
         <div className = "emp_1"></div>
         <div className = "passport">
             <FormItem
               {...formItemLayout}
-              label={<b><font>Passport</font></b>}
+              label={<b><font>{lang?"เลขที่หนังสือเดินทาง":"Passport #"}</font></b>}
             >
-              <Input placeholder="ABCDEF123" name = "passport" value={form.passport} onChange = {updateField} style = {formConfig}  />
+              <Input placeholder="ABCDEF123" name = "passport" value={form.passport} onChange = {updateField} style = {formConfig} className="font_kanit"   />
             </FormItem>
             
             </div>
             <div className = "nationality">
-            <FormItem 
+            {/* <FormItem 
               {...formItemLayout} 
               label={<b><font>Natoinality</font></b>}
             >
-              <Input placeholder="Th" name = "nation" value={form.nation} onChange = {updateField}  style = {formConfig} />
-            </FormItem>
+              <Input placeholder="Th" name = "nation" value={form.nation} onChange = {updateField}  style = {formConfig} className="font_kanit" />
+            </FormItem> */}
+
+<FormItem 
+  {...formItemLayout} 
+  label={<b><font>{lang?"สัญชาติ":"Natoinality"}</font></b>}
+>
+                  <Select name = "nation" value = {form.nation}  placeholder="Thailand"  onSelect ={(v,e) => updateDrop(v,e)} style={{border:"solid 1px  #654018",width: '100%',borderRadius:'5px' }} {...formItemLayout} className ="font_kanit" label={<b><font>Natoinality</font></b>}>
+                    <Option name = "nation"  value="Thailand"  style = {formConfig}>Thailand</Option>
+                    <Option name = "nation" value="Japanese"  style = {formConfig}>Japanese</Option>
+                  </Select>
+                  </FormItem>
+
             </div>
             </div>
-            <h2><font>For Product Item</font></h2><hr></hr>
-            
+            <h2><font><b>For Product Item</b></font></h2><hr></hr>
+            <div style ={{display:'flex',justifyContent:'flex-end',padding:'10px'}}>
+              <a><p><font onClick = {setLang}><b>{lang?"Eng":"Th"}</b></font></p></a>
+            </div>
             <div className ="container_2">
             <div className = "vat">
             <FormItem
               {...formItemLayout}
-              label={<b><font>Vat</font></b>}
+              label={<b><font>{lang?"เลขที่ใบกำกับภาษี":"Vat #"}</font></b>}
             >
-              <Input placeholder="3131" name = "vat" value={form.vat} onChange = {updateField}  style = {formConfig} />
+              <Input placeholder="3131" name = "vat" value={form.vat} onChange = {updateField}  style = {formConfig} className="font_kanit"  />
             </FormItem>
             </div>
             <div className = "emp_2"></div>
             <div className = "pbox" style ={{display:"flex"}} >
-            {pro_cat.map( x =>(
+            {lang?
+              pro_cat_1.map( x =>(
               
-                <Button onClick ={() => updateCat(x) } style = {{marginLeft:'auto',marginRight:'auto',width:"210px",border:"3px solid",...formConfig}} >{<font>{x}</font>}</Button>
-            )
+                <Button className="font_kanit"  onClick ={() => updateCat(x) } style = {{marginLeft:'auto',marginRight:'auto',width:"210px",border:"3px solid",...formConfig}} >{<font>{x}</font>}</Button>
+            )):
+            pro_cat_2.map( x =>(
+              
+              <Button className="font_kanit"  onClick ={() => updateCat(x) } style = {{marginLeft:'auto',marginRight:'auto',width:"210px",border:"3px solid",...formConfig}} >{<font>{x}</font>}</Button>
+          ))
+
           
-            )}
-              <Button shape="circle" style={{marginLeft:'5px',...formConfig,border:"3px solid #654018"}}>+</Button> 
+            }
+              <Button  className="font_kanit"  shape="circle" style={{marginLeft:'5px',...formConfig,border:"3px solid #654018"}}>+</Button> 
           </div>
 
           <div className = "product">
             <FormItem
               {...formItemLayout}
-              label={<b><font>Product</font></b>}
+              label={<b><font>{lang?"รายการสินค้า":"Product"}</font></b>}
             >
-              <Input placeholder="Shirts" name = "product" value={form.product} onChange = {updateField} style = {formConfig} />
+              <Input className="font_kanit"  placeholder="Shirts" name = "product" value={form.product} onChange = {updateField} style = {formConfig} />
             </FormItem>
             </div>
             <div className = "quantity" >
             
             <FormItem
               {...formItemLayout}
-              label={<b><font>Quantity</font></b>}
+              label={<b><font>{lang?"จำนวน":"Quantity"}</font></b>}
             >
-              <Input placeholder="1" name = "quantity" value={form.quantity} onChange = {updateField} style = {formConfig}  />
+              <Input className="font_kanit"  placeholder="1" name = "quantity" value={form.quantity} onChange = {updateField} style = {formConfig}  />
             </FormItem>
             </div>
             <div className = "value">
                 
             <FormItem
               {...formItemLayout}
-              label={<b><font>Value</font></b>}
+              label={<b><font>{lang?"ราคา":"Value"}</font></b>}
             >
-              <Input placeholder="3$" name = "value" value={form.value} onChange = {updateField}  style = {formConfig} />
+              <Input className="font_kanit"  placeholder="3$" name = "value" value={form.value} onChange = {updateField}  style = {formConfig} />
             </FormItem>
             </div>
             <div className = "enter" >
-            <Button onClick = {addProduct} style = {{width:"200px",backgroundColor:"#ff7f26",height:"40px"}}>Enter</Button>
+            <Button className="font_kanit"  onClick = {addProduct} style = {{width:"200px",backgroundColor:"#ff7f26",height:"40px"}}><font style = {{fontSize:"18px"}}>{lang?"ตกลง":"Enter"}</font></Button>
             </div>
             </div>
             <div style = {{marginTop:"20px" }}>
-            <Table dataSource={productList.data} columns={productColumns} style = {{color:"#654018"}} />
+            <Table className="font_kanit"  dataSource={productList.data} columns={productColumns} style = {{color:"#654018"}} />
             </div>
-
+            </div>
     </LayoutContent>
     </LayoutContentWrapper>
         
